@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model claimgaransi {
+  id           Int      @id @default(autoincrement())
+  serialnumber String
+  tipe         String
+  part         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+}
+
+model customer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  no_telp   String
+  alamat    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+model penawaran {
+  id           Int      @id @default(autoincrement())
+  serialnumber String
+  tipe         String
+  part         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+}
+
+model servicein {
+  id           Int      @id @default(autoincrement())
+  serialnumber String
+  tipe         String
+  kelengkapan  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+}
+
+model serviceout {
+  id           Int      @id @default(autoincrement())
+  serialnumber String
+  tipe         String
+  kelengkapan  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+}
+
+model user {
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
