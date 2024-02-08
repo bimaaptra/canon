@@ -47,6 +47,7 @@ exports.createClaimGaransi = async (req, res) => {
     const createClaimGaransi = await prisma.claimGaransi.create({
       data: {
         ...body,
+        updatedAt: new Date(),
       },
     });
     res.status(200).json({

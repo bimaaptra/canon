@@ -47,6 +47,7 @@ exports.createServiceIn = async (req, res) => {
     const createServiceIn = await prisma.serviceIn.create({
       data: {
         ...body,
+        updatedAt: new Date(),
       },
     });
     res.status(200).json({
