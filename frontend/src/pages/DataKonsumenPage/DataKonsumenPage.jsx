@@ -106,7 +106,7 @@ const DataKonsumen = () => {
               className="mb-2 font-bold text-lg text-gray-900"
               htmlFor="name"
             >
-              Name
+              Nama Lengkap
             </label>
             <input
               className="border p-2"
@@ -122,7 +122,7 @@ const DataKonsumen = () => {
               className="mb-2 font-bold text-lg text-gray-900"
               htmlFor="phoneNumber"
             >
-              Phone Number
+              Nomor Telepon
             </label>
             <input
               className="border p-2"
@@ -138,7 +138,7 @@ const DataKonsumen = () => {
               className="mb-2 font-bold text-lg text-gray-900"
               htmlFor="address"
             >
-              Address
+              Alamat Lengkap
             </label>
             <input
               className="border p-2"
@@ -158,7 +158,7 @@ const DataKonsumen = () => {
         </form>
         <hr />
         <div>
-          <h1 className="text-2xl font-bold mb-4 text-center">Customer List</h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">Kustomer List</h1>
           <button
             onClick={generatePDF}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
@@ -168,10 +168,10 @@ const DataKonsumen = () => {
           <table className="w-full table-auto border">
             <thead>
               <tr>
-                <th className="px-4 py-2">No</th>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Phone Number</th>
-                <th className="px-4 py-2">Address</th>
+                <th className="px-4 py-2">Nomor</th>
+                <th className="px-4 py-2">Nama Lengkap</th>
+                <th className="px-4 py-2">Nomor Telepon</th>
+                <th className="px-4 py-2">Alamat Lengkap</th>
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>

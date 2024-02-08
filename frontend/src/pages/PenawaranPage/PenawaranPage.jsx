@@ -109,7 +109,7 @@ const PenawaranPage = () => {
               className="mb-2 font-bold text-lg text-gray-900"
               htmlFor="name"
             >
-              Name
+              Serial Number
             </label>
             <input
               className="border p-2"
@@ -173,7 +173,7 @@ const PenawaranPage = () => {
           <table className="w-full table-auto border">
             <thead>
               <tr>
-                <th className="px-4 py-2">No</th>
+                <th className="px-4 py-2">Nomor</th>
                 <th className="px-4 py-2">Serial Number</th>
                 <th className="px-4 py-2">Tipe</th>
                 <th className="px-4 py-2">Part</th>
