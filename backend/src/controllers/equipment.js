@@ -2,13 +2,13 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
-exports.getCustomer = async (req, res) => {
+exports.getEquipment = async (req, res) => {
   try {
-    const getCustomer = await prisma.customer.findMany()
+    const getEquipment = await prisma.equipment.findMany()
     res.status(200).json({
       status: true,
-      message: 'Success get customer',
-      results: getCustomer
+      message: 'Success get equipment',
+      results: getEquipment
     })
   } catch (error) {
     console.error(error)
@@ -19,18 +19,18 @@ exports.getCustomer = async (req, res) => {
   }
 }
 
-exports.getCustomerById = async (req, res) => {
+exports.getEquipmentById = async (req, res) => {
   try {
     const { id } = req.params
-    const getCustomer = await prisma.customer.findUnique({
+    const getEquipment = await prisma.equipment.findUnique({
       where: {
         id: parseInt(id)
       }
     })
     res.status(200).json({
       status: true,
-      message: 'Success get customer',
-      results: getCustomer
+      message: 'Success get equipment',
+      results: getEquipment
     })
   } catch (error) {
     console.error(error)
@@ -41,18 +41,18 @@ exports.getCustomerById = async (req, res) => {
   }
 }
 
-exports.createCustomer = async (req, res) => {
+exports.createEquipment = async (req, res) => {
   try {
     const { body } = req
-    const createCustomer = await prisma.customer.create({
+    const createEquipment = await prisma.equipment.create({
       data: {
         ...body
       }
     })
     res.status(200).json({
       status: true,
-      message: 'Success create customer',
-      results: createCustomer
+      message: 'Success create equipment',
+      results: createEquipment
     })
   } catch (error) {
     console.error(error)
@@ -63,10 +63,10 @@ exports.createCustomer = async (req, res) => {
   }
 }
 
-exports.updateCustomer = async (req, res) => {
+exports.updateEquipment = async (req, res) => {
   try {
     const { body, params } = req
-    const updateCustomer = await prisma.customer.update({
+    const updateEquipment = await prisma.equipment.update({
       where: {
         id: parseInt(params.id)
       },
@@ -76,8 +76,8 @@ exports.updateCustomer = async (req, res) => {
     })
     res.status(200).json({
       status: true,
-      message: 'Success update customer',
-      results: updateCustomer
+      message: 'Success update equipment',
+      results: updateEquipment
     })
   } catch (error) {
     console.error(error)
@@ -88,18 +88,18 @@ exports.updateCustomer = async (req, res) => {
   }
 }
 
-exports.deleteCustomer = async (req, res) => {
+exports.deleteEquipment = async (req, res) => {
   try {
     const { id } = req.params
-    const deleteCustomer = await prisma.customer.delete({
+    const deleteEquipment = await prisma.equipment.delete({
       where: {
         id: parseInt(id)
       }
     })
     res.status(200).json({
       status: true,
-      message: 'Success delete customer',
-      results: deleteCustomer
+      message: 'Success delete equipment',
+      results: deleteEquipment
     })
   } catch (error) {
     console.error(error)

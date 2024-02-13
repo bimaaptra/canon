@@ -4,7 +4,16 @@ const prisma = new PrismaClient();
 
 exports.getServiceOut = async (req, res) => {
   try {
-    const getServiceOut = await prisma.serviceOut.findMany();
+    const getServiceOut = await prisma.serviceOut.findMany({
+      include: {
+        ServiceIn: {
+          include: {
+            customer: true,
+            kelengkapan: true,
+          },
+        },
+      },
+    });
     res.status(200).json({
       status: true,
       message: "Success get service out",
@@ -47,7 +56,6 @@ exports.createServiceOut = async (req, res) => {
     const createServiceOut = await prisma.serviceOut.create({
       data: {
         ...body,
-        updatedAt: new Date(),
       },
     });
     res.status(200).json({

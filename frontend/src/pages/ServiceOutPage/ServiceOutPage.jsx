@@ -7,7 +7,7 @@ import useAuthStore from "../../store/authStore";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const ServiceKeluar = () => {
+const ServiceOutPage = () => {
   const [serialNumber, setSerialNumber] = useState("");
   const [tipe, setTipe] = useState("");
   const [kelengkapan, setKelengkapan] = useState("");
@@ -70,6 +70,7 @@ const ServiceKeluar = () => {
   const fetchData = async () => {
     try {
       const response = await http(user).get("/service-out");
+      console.log(response.data.results);
       setData(response.data.results);
     } catch (error) {
       console.error(error);
@@ -82,17 +83,30 @@ const ServiceKeluar = () => {
 
   const generatePDF = () => {
     const doc = new jsPDF();
-    const columns = ["No", "Serial Number", "Tipe", "Kelengkapan"];
+    const columns = [
+      "Number",
+      "Receipt Number",
+      "Service In Receipt Number",
+      "Customer",
+      "Serial Number",
+      "Type",
+      "Equipments",
+    ];
     const body = [];
 
-    data.forEach((penawaran) => {
-      const penawaranData = [
-        penawaran.id,
-        penawaran.serialnumber,
-        penawaran.tipe,
-        penawaran.kelengkapan,
+    data.forEach((serviceOut) => {
+      const serviceOutData = [
+        serviceOut.id,
+        serviceOut.nomor_service,
+        serviceOut.ServiceIn.nomor_service,
+        serviceOut.ServiceIn.customer.nama,
+        serviceOut.ServiceIn.serial_number,
+        serviceOut.ServiceIn.tipe,
+        serviceOut.ServiceIn.kelengkapan.length !== 0
+          ? serviceOut.ServiceIn.kelengkapan.map((item) => item.nama).join(", ")
+          : "No Equipment",
       ];
-      body.push(penawaranData);
+      body.push(serviceOutData);
     });
 
     doc.autoTable({ columns, body, startY: 20 });
@@ -103,66 +117,66 @@ const ServiceKeluar = () => {
     <>
       <Header />
       <section className="p-4">
-        <form className="mb-4 space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
+        {/* <form className='mb-4 space-y-4' onSubmit={handleSubmit}>
+          <div className='flex flex-col'>
             <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="name"
+              className='mb-2 font-bold text-lg text-gray-900'
+              htmlFor='name'
             >
               Serial Number
             </label>
             <input
-              className="border p-2"
-              id="serialNumber"
-              type="text"
-              placeholder="SerialNumber"
+              className='border p-2'
+              id='serialNumber'
+              type='text'
+              placeholder='SerialNumber'
               value={serialNumber}
-              onChange={(e) => setSerialNumber(e.target.value)}
+              onChange={e => setSerialNumber(e.target.value)}
             />
           </div>
-          <div className="flex flex-col">
+          <div className='flex flex-col'>
             <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="tipe"
+              className='mb-2 font-bold text-lg text-gray-900'
+              htmlFor='tipe'
             >
               Tipe
             </label>
             <input
-              className="border p-2"
-              id="tipe"
-              type="text"
-              placeholder="Tipe"
+              className='border p-2'
+              id='tipe'
+              type='text'
+              placeholder='Tipe'
               value={tipe}
-              onChange={(e) => setTipe(e.target.value)}
+              onChange={e => setTipe(e.target.value)}
             />
           </div>
-          <div className="flex flex-col">
+          <div className='flex flex-col'>
             <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="kelengkapan"
+              className='mb-2 font-bold text-lg text-gray-900'
+              htmlFor='kelengkapan'
             >
               Kelengkapan
             </label>
             <input
-              className="border p-2"
-              id="kelengkapan"
-              type="text"
-              placeholder="Kelengkapan"
+              className='border p-2'
+              id='kelengkapan'
+              type='text'
+              placeholder='Kelengkapan'
               value={kelengkapan}
-              onChange={(e) => setKelengkapan(e.target.value)}
+              onChange={e => setKelengkapan(e.target.value)}
             />
           </div>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            type="submit"
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            type='submit'
           >
-            {editingPenawaran ? "Update" : "Submit"}
+            {editingPenawaran ? 'Update' : 'Submit'}
           </button>
         </form>
-        <hr />
+        <hr /> */}
         <div>
           <h1 className="text-2xl font-bold mb-4 text-center">
-            Penawaran List
+            Service Out List
           </h1>
           <button
             onClick={generatePDF}
@@ -173,31 +187,55 @@ const ServiceKeluar = () => {
           <table className="w-full table-auto border">
             <thead>
               <tr>
-                <th className="px-4 py-2">Nomor</th>
+                <th className="px-4 py-2">Number</th>
+                <th className="px-4 py-2">Receipt Number</th>
+                <th className="px-4 py-2">Service In Receipt Number</th>
+                <th className="px-4 py-2">Customer</th>
                 <th className="px-4 py-2">Serial Number</th>
-                <th className="px-4 py-2">Tipe</th>
-                <th className="px-4 py-2">Kelengkapan</th>
+                <th className="px-4 py-2">Type</th>
+                <th className="px-4 py-2">Equipments</th>
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((penawaran) => (
-                <tr key={penawaran.id}>
-                  <td className="border px-4 py-2">{penawaran.id}</td>
-                  <td className="border px-4 py-2">{penawaran.serialnumber}</td>
-                  <td className="border px-4 py-2">{penawaran.tipe}</td>
-                  <td className="border px-4 py-2">{penawaran.kelengkapan}</td>
+              {data.map((serviceOut) => (
+                <tr key={serviceOut.id}>
+                  <td className="border px-4 py-2">{serviceOut.id}</td>
+                  <td className="border px-4 py-2">
+                    {serviceOut.nomor_service}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {serviceOut.ServiceIn.nomor_service}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {serviceOut.ServiceIn.customer.nama}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {serviceOut.ServiceIn.serial_number}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {serviceOut.ServiceIn.tipe}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {serviceOut.ServiceIn.kelengkapan.length !== 0
+                      ? serviceOut.ServiceIn.kelengkapan.map((item) => (
+                          <ul key={item.id} className="list-disc list-inside">
+                            <li>{item.nama}</li>
+                          </ul>
+                        ))
+                      : "No Equipment"}
+                  </td>
                   <td className="border px-4 py-2">
                     <div className="flex space-x-4">
                       <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => handleEdit(penawaran)}
+                        onClick={() => handleEdit(serviceOut)}
                       >
                         Edit
                       </button>
                       <button
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => handleDelete(penawaran.id)}
+                        onClick={() => handleDelete(serviceOut.id)}
                       >
                         Delete
                       </button>
@@ -214,4 +252,4 @@ const ServiceKeluar = () => {
   );
 };
 
-export default WithAuthProtection(ServiceKeluar);
+export default WithAuthProtection(ServiceOutPage);

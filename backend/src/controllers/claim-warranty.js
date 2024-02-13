@@ -2,13 +2,13 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
-exports.getCustomer = async (req, res) => {
+exports.getClaimWarranty = async (req, res) => {
   try {
-    const getCustomer = await prisma.customer.findMany()
+    const getClaimWarranty = await prisma.claimWarranty.findMany()
     res.status(200).json({
       status: true,
-      message: 'Success get customer',
-      results: getCustomer
+      message: 'Success get claim warranty',
+      results: getClaimWarranty
     })
   } catch (error) {
     console.error(error)
@@ -19,18 +19,18 @@ exports.getCustomer = async (req, res) => {
   }
 }
 
-exports.getCustomerById = async (req, res) => {
+exports.getClaimWarrantyById = async (req, res) => {
   try {
     const { id } = req.params
-    const getCustomer = await prisma.customer.findUnique({
+    const getClaimWarranty = await prisma.claimWarranty.findUnique({
       where: {
         id: parseInt(id)
       }
     })
     res.status(200).json({
       status: true,
-      message: 'Success get customer',
-      results: getCustomer
+      message: 'Success get claim warranty',
+      results: getClaimWarranty
     })
   } catch (error) {
     console.error(error)
@@ -41,18 +41,18 @@ exports.getCustomerById = async (req, res) => {
   }
 }
 
-exports.createCustomer = async (req, res) => {
+exports.createClaimWarranty = async (req, res) => {
   try {
     const { body } = req
-    const createCustomer = await prisma.customer.create({
+    const createClaimWarranty = await prisma.claimWarranty.create({
       data: {
         ...body
       }
     })
     res.status(200).json({
       status: true,
-      message: 'Success create customer',
-      results: createCustomer
+      message: 'Success create claim warranty',
+      results: createClaimWarranty
     })
   } catch (error) {
     console.error(error)
@@ -63,12 +63,13 @@ exports.createCustomer = async (req, res) => {
   }
 }
 
-exports.updateCustomer = async (req, res) => {
+exports.updateClaimWarranty = async (req, res) => {
   try {
-    const { body, params } = req
-    const updateCustomer = await prisma.customer.update({
+    const { id } = req.params
+    const { body } = req
+    const updateClaimWarranty = await prisma.claimWarranty.update({
       where: {
-        id: parseInt(params.id)
+        id: parseInt(id)
       },
       data: {
         ...body
@@ -76,8 +77,8 @@ exports.updateCustomer = async (req, res) => {
     })
     res.status(200).json({
       status: true,
-      message: 'Success update customer',
-      results: updateCustomer
+      message: 'Success update claim warranty',
+      results: updateClaimWarranty
     })
   } catch (error) {
     console.error(error)
@@ -88,18 +89,18 @@ exports.updateCustomer = async (req, res) => {
   }
 }
 
-exports.deleteCustomer = async (req, res) => {
+exports.deleteClaimWarranty = async (req, res) => {
   try {
     const { id } = req.params
-    const deleteCustomer = await prisma.customer.delete({
+    const deleteClaimWarranty = await prisma.claimWarranty.delete({
       where: {
         id: parseInt(id)
       }
     })
     res.status(200).json({
       status: true,
-      message: 'Success delete customer',
-      results: deleteCustomer
+      message: 'Success delete claim warranty',
+      results: deleteClaimWarranty
     })
   } catch (error) {
     console.error(error)

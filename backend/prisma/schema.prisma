@@ -8,55 +8,76 @@ datasource db {
 }
 
 model ClaimGaransi {
-    id           Int      @id @default(autoincrement())
-    serialnumber String
-    tipe         String
-    part         String
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime
+    id            Int       @id @default(autoincrement())
+    serial_number String
+    tipe          String
+    part          String
+    customerId    Int?
+    customer      Customer? @relation(fields: [customerId], references: [id])
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @default(now())
 }
 
 model Customer {
-    id        Int      @id @default(autoincrement())
-    name      String
-    no_telp   String
-    alamat    String
-    createdAt DateTime @default(now())
-    updatedAt DateTime
+    id           Int            @id @default(autoincrement())
+    nama         String
+    no_telp      String
+    alamat       String
+    ServiceIn    ServiceIn[]
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime       @default(now())
+    Penawaran    Penawaran[]
+    ClaimGaransi ClaimGaransi[]
 }
 
 model Penawaran {
-    id           Int      @id @default(autoincrement())
-    serialnumber String
-    tipe         String
-    part         String
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime
+    id            Int       @id @default(autoincrement())
+    serial_number String
+    tipe          String
+    part          String
+    customerId    Int?
+    customer      Customer? @relation(fields: [customerId], references: [id])
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @default(now())
 }
 
 model ServiceIn {
-    id           Int      @id @default(autoincrement())
-    serialnumber String
-    tipe         String
-    kelengkapan  String
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime
+    id            Int          @id @default(autoincrement())
+    nomor_service String
+    serial_number String
+    tipe          String
+    kelengkapan   Equipment[]
+    ServiceOut    ServiceOut[]
+    customerId    Int?
+    customer      Customer?    @relation(fields: [customerId], references: [id])
+    status        String
+    createdAt     DateTime     @default(now())
+    updatedAt     DateTime     @default(now())
 }
 
 model ServiceOut {
-    id           Int      @id @default(autoincrement())
-    serialnumber String
-    tipe         String
-    kelengkapan  String
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime
+    id            Int        @id @default(autoincrement())
+    nomor_service String
+    serviceInId   Int?
+    ServiceIn     ServiceIn? @relation(fields: [serviceInId], references: [id])
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @default(now())
+}
+
+model Equipment {
+    id          Int        @id @default(autoincrement())
+    nama        String
+    serviceInId Int?
+    ServiceIn   ServiceIn? @relation(fields: [serviceInId], references: [id])
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @default(now())
 }
 
 model User {
     id        Int      @id @default(autoincrement())
-    name      String
+    nama      String
     username  String
     password  String
     createdAt DateTime @default(now())
-    updatedAt DateTime
+    updatedAt DateTime @default(now())
 }
