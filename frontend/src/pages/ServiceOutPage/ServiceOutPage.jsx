@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { WithAuthProtection } from "../../components/withAuthProtection";
+import { WithAuthProtection } from "../../components/WithAuthProtection";
 import http from "../../helpers/http";
 import useAuthStore from "../../store/authStore";
 import { jsPDF } from "jspdf";
