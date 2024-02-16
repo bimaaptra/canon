@@ -318,8 +318,11 @@ const ServiceInPage = () => {
                         </button>
                       )}
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                          serviceIn.status === "Complete" && "hover:bg-blue-500"
+                        }`}
                         onClick={() => handleEdit(serviceIn)}
+                        disabled={serviceIn.status === "Complete"}
                       >
                         Edit
                       </button>
